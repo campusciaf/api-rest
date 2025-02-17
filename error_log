@@ -1,0 +1,152 @@
+[05-Feb-2024 21:48:04 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:48:11 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:48:12 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:48:48 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:49:44 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:49:44 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:50:11 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:50:11 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:51:41 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:51:41 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:51:45 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 21:51:45 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707109205HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707109205HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 22:02:04 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:156
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(156): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar('22:02:04', 1707112800)
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 156
+[05-Feb-2024 22:03:04 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct(): Failed to parse time string (1707112800) at position 8 (0): Unexpected character' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:155
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(155): DateTime->__construct('1707112800')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar(1707112800, '22:03:04')
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 155
+[05-Feb-2024 22:03:10 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct(): Failed to parse time string (1707112800) at position 8 (0): Unexpected character' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:155
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(155): DateTime->__construct('1707112800')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar(1707112800, '22:03:10')
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 155
+[05-Feb-2024 22:03:32 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct(): Failed to parse time string (1707112800) at position 8 (0): Unexpected character' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:155
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(155): DateTime->__construct('1707112800')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar(1707112800, '22:03:32')
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 155
+[05-Feb-2024 22:03:36 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct(): Failed to parse time string (1707112800) at position 8 (0): Unexpected character' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:155
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(155): DateTime->__construct('1707112800')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar(1707112800, '22:03:36')
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 155
+[05-Feb-2024 22:03:50 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateTime::__construct(): Failed to parse time string (1707112800) at position 8 (0): Unexpected character' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:155
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(155): DateTime->__construct('1707112800')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar(1707112800, '22:03:50')
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 155
+[05-Feb-2024 22:08:45 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:145) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
+[05-Feb-2024 22:08:54 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:145) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
+[05-Feb-2024 22:09:56 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:157
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(157): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar('22:09:56', 1707112800)
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 157
+[05-Feb-2024 22:09:58 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:157
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(157): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(126): horarios->sumar('22:09:58', 1707112800)
+#2 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#3 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 157
+[05-Feb-2024 22:10:52 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 22:10:53 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 22:11:02 America/Bogota] PHP Fatal error:  Uncaught exception 'Exception' with message 'DateInterval::__construct(): Unknown or bad format (PT1707112800HMS)' in /home/ciafedu/public_html/api_rest/clases/horarios.class.php:128
+Stack trace:
+#0 /home/ciafedu/public_html/api_rest/clases/horarios.class.php(128): DateInterval->__construct('PT1707112800HMS')
+#1 /home/ciafedu/public_html/api_rest/horarios.php(18): horarios->obtenerHorarioProximo()
+#2 {main}
+  thrown in /home/ciafedu/public_html/api_rest/clases/horarios.class.php on line 128
+[05-Feb-2024 22:12:22 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:146) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
+[05-Feb-2024 22:12:45 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:146) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
+[06-Feb-2024 08:11:15 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:146) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
+[06-Feb-2024 08:12:12 America/Bogota] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/ciafedu/public_html/api_rest/clases/horarios.class.php:146) in /home/ciafedu/public_html/api_rest/horarios.php on line 19
