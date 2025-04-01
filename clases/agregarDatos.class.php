@@ -20,6 +20,7 @@ class agregarDatos extends ConexionCrud{
     private $correo ="";
     private $celular ="";
     private $fo_programa ="";
+    private $jornada_e ="";
     private $token ="";
     private $identificacion="";
     private $medio="Web";
@@ -54,7 +55,7 @@ class agregarDatos extends ConexionCrud{
             $periodo_campana=$resultado[0]["periodo_campana"];
             
 
-            if(!isset($datos["nombre"]) || !isset($datos["correo"]) || !isset($datos["celular"]) || !isset($datos["fo_programa"])){
+            if(!isset($datos["nombre"]) || !isset($datos["correo"]) || !isset($datos["celular"]) || !isset($datos["fo_programa"]) || !isset($datos["jornada_e"])){
                     return $_respuestas->error_400();
             }else{
                    
@@ -63,9 +64,10 @@ class agregarDatos extends ConexionCrud{
                     $this->correo=$datos["correo"];
                     $this->celular=$datos["celular"];
                     $this->fo_programa=$datos["fo_programa"];
+                    $this->jornada_e=$datos["jornada_e"];
 
-                $query ="INSERT INTO " . $this->table . " (identificacion,fo_programa,nombre,celular,email,clave,periodo_ingreso,fecha_ingreso,hora_ingreso,medio,estado,periodo_campana) 
-                values ('". $this->identificacion."','". $this->fo_programa."','". $this->nombre."','". $this->celular."','". $this->correo."','". $this->clave."','". $periodo_actual."','". $fecha."','". $hora."','". $this->medio."','". $this->estado."','". $periodo_campana."') ";
+                $query ="INSERT INTO " . $this->table . " (identificacion,fo_programa,jornada_e,nombre,celular,email,clave,periodo_ingreso,fecha_ingreso,hora_ingreso,medio,estado,periodo_campana) 
+                values ('". $this->identificacion."','". $this->fo_programa."','". $this->jornada_e."','". $this->nombre."','". $this->celular."','". $this->correo."','". $this->clave."','". $periodo_actual."','". $fecha."','". $hora."','". $this->medio."','". $this->estado."','". $periodo_campana."') ";
                 
                 $resp = parent::nonQueryId($query);
                 if($resp){
