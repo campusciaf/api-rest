@@ -21,7 +21,36 @@ class datos extends ConexionCrud{
        $documento = $_POST['documento'] ?? '';
       
         // upload.php
-        $uploadDirectory = '../oncenter/img_cedula/';
+        $uploadDirectory = '';
+        switch ($documento) {
+            case 1:
+                $uploadDirectory = '../oncenter/img_cedula/';
+                break;
+            case 2:
+                $uploadDirectory = '../oncenter/img_diploma/';
+                break;
+            case 3:
+               $uploadDirectory = '../oncenter/img_acta/';
+                break;
+            case 4:
+                $uploadDirectory = '../oncenter/img_salud/';
+                break;
+            case 5:
+                $uploadDirectory = '../oncenter/img_prueba/';
+                break;
+            case 6:
+                $uploadDirectory = '../oncenter/img_compromiso/';
+                break;
+            case 7:
+                $uploadDirectory = '../oncenter/img_proteccion_datos/';
+                break;
+            default:
+                // Manejo de caso por defecto si es necesario
+                $uploadDirectory = '../oncenter/';
+            break;
+        }
+
+        
         // $uploadFile = $uploadDirectory . basename($_FILES['file']['name']);
 
         // Obtener el nombre del archivo
