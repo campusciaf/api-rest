@@ -82,7 +82,7 @@ class agregarDatos extends ConexionCrud{
                     $mensaje_final .= 'Somos el PARCHE de los universitarios en la era digital';
                     $this->enviar_correo( $this->correo, $asuntodir, $mensaje_final);
 
-                    $mensajeasesor=$mensaje_final . " " . $this->identificacion;
+                    $mensajeasesor=$mensaje_final . " " . $this->identificacion . " registro desde la pagina wev inicio";
 
                     // Envío a sistemas de información
                     $this->enviar_correo("leidy.lopez@ciaf.edu.co", $asuntodir, $mensajeasesor);
