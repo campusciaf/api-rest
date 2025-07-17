@@ -55,6 +55,28 @@ class cifras extends ConexionCrud{
        
     }
 
+    public function financiacion(){
+        $_respuestas = new respuestas;
+       
+
+        if(!isset(getallheaders()["Autorizacion"]) || getallheaders()["Autorizacion"] != 'KFTDQFYvqbPLXkHTuXQJR4Qy3vUryK' ){
+            return $_respuestas->error_401();
+            
+        }else{
+
+       $query = "
+            SELECT SUM(m.valor_financiacion) AS total
+            FROM sofi_matricula m
+            JOIN sofi_persona p ON m.id_persona = p.id_persona
+            WHERE p.estado = 'Aprobado'
+        ";
+        return parent::listar($query);
+
+        }
+
+       
+    }
+
 
 
 

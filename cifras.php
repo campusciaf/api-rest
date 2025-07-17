@@ -24,7 +24,14 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         header('Content-Type: application/json');
         echo json_encode($dato);
         http_response_code(200);
+    }else if($_GET['id']==0){
+        $dato = $_datos->financiacion();
+        header('Content-Type: application/json');
+        echo json_encode($dato);
+        http_response_code(200);
     }
+
+    
 
 }else if($_SERVER["REQUEST_METHOD"] == "POST"){
    
