@@ -21,7 +21,7 @@ class reglamentos extends ConexionCrud{
             
         }else{
 
-        $query = "SELECT * FROM " . $this->table . "";
+        $query = "SELECT * FROM " . $this->table . " WHERE estado = 1";
         return parent::listar($query);
 
         }
