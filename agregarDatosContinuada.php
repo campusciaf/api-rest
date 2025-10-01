@@ -1,11 +1,11 @@
 <?php
 require_once 'clases/respuestas.class.php';
 require_once 'clases/agregarDatosContinuada.class.php';
-//header("Access-Control-Allow-Origin: *");// quita el bloqueo cros 
+header("Access-Control-Allow-Origin: *");// quita el bloqueo cros 
 // header('Access-Control-Allow-Origin: https://ciaf.edu.co/');
+// header('Access-Control-Allow-Origin: https://www.ciaf.edu.co/');
 // header('Access-Control-Allow-Origin: http://localhost:4200');
 header("Access-Control-Allow-Headers: Origin,Autorizacion");
-header("Access-Control-Allow-Headers: Origin, autorizacion, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header('Content-Type: application/json');
 
 
