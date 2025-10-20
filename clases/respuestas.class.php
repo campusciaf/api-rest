@@ -5,7 +5,6 @@ class respuestas{
     public $response = [
         "status" => "ok",
         "result" => array()
-
     ];
 
     public function error_405(){
@@ -15,7 +14,6 @@ class respuestas{
             "error_msg" => "metodo no permitido"
         );
         return $this->response;
-
     }
 
     public function error_200($valor = "Datos incorrectos"){
@@ -25,7 +23,6 @@ class respuestas{
             "error_msg" => $valor
         );
         return $this->response;
-
     }
 
     public function error_400(){
@@ -35,7 +32,6 @@ class respuestas{
             "error_msg" => "Datos enviados incompletos o con formato incorrecto"
         );
         return $this->response;
-
     }
 
     
@@ -46,7 +42,6 @@ class respuestas{
             "error_msg" => $valor
         );
         return $this->response;
-
     }
 
     public function error_401($valor = "No autorizado, token invalido"){
@@ -56,9 +51,20 @@ class respuestas{
             "error_msg" => $valor
         );
         return $this->response;
-
     }
 
+    public function successResponse($data = []) {
+        return [
+            'status' => 'success',
+            'data' => $data
+        ];
+    }
 
+    public function errorResponse($message = 'Error', $code = 400) {
+        return [
+            'status' => 'error',
+            'message' => $message,
+            'code' => $code
+        ];
+    }
 }
-?>

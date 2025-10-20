@@ -3,7 +3,6 @@ require "Conexion.php";
 session_start();
 class ConexionCrud
 {
-
     private function convertirUTF8($array){
         array_walk_recursive($array,function(&$item,$key){
             if(!mb_detect_encoding($item,'utf-8',true)){
