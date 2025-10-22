@@ -4,8 +4,20 @@ require_once 'clases/usuario.class.php';
 require_once 'clases/financiacion.class.php';
 
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Origin: https://ciaf.edu.co/');
-// header('Access-Control-Allow-Origin: http://localhost:4200');
+
+// mutliple origins for development and production
+$allowed_origins = [
+    'http://localhost:4200',
+    'https://ciaf.edu.co',
+    'https://www.ciaf.edu.co',
+];
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+
 header("Access-Control-Allow-Headers: Origin,Autorizacion");
 header("Access-Control-Allow-Headers: Origin, autorizacion, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header('Content-Type: application/json');
