@@ -10,7 +10,8 @@ define("DB_NAME", "ciaf_v4");
 define("DB_USERNAME", "root");
 
 //Contrase�0�9a del usuario de la base de datos
-define("DB_PASSWORD", "Ciaf2025@**");
+// define("DB_PASSWORD", "Ciaf2025@**");
+define("DB_PASSWORD", "");
 
 define("DB_PORT", "3306");
 
@@ -21,3 +22,4 @@ define("DB_ENCODE","utf8");
 define("PRO_NOMBRE","CIAFI");
 
 ?>
+
