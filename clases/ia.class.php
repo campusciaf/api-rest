@@ -2,7 +2,7 @@
 
 class IA {
 
-    private $apiKey = "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";
+    private $apiKey = "";
 
     public function generarRespuesta($mensaje){
 
