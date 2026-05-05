@@ -1,8 +1,8 @@
 <?php
 
 class IA {
-
-    private $apiKey = "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";
+//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
+    private $apiKey = "";
 
     public function generarRespuesta($mensaje){
 
