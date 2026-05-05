@@ -1,7 +1,7 @@
 <?php
 
 class IA {
-//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
+
     private $apiKey = "";
 
     public function generarRespuesta($mensaje){
