@@ -5,6 +5,7 @@ require_once 'respuestas.class.php';
 class blog extends ConexionCrud{
 
     private $table= "web_blog";
+    private $table_categorias = "web_blog_categorias";
 
     public function obtenerBlogActivos(){
         $_respuestas = new respuestas;
@@ -15,7 +16,7 @@ class blog extends ConexionCrud{
             
         }else{
 
-        $query = "SELECT * FROM " . $this->table . "  WHERE estado = '1' ORDER BY id_blog DESC";
+        $query = "SELECT * FROM " . $this->table . " b INNER JOIN " . $this->table_categorias . " c ON b.id_web_blog_categorias = c.id_web_blog_categorias WHERE b.estado = '1' ORDER BY b.id_blog DESC";
         return parent::listar($query);
 
         }
