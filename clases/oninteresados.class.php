@@ -271,6 +271,9 @@ class datos extends ConexionCrud{
             date_default_timezone_set("America/Bogota");
             $fecha = date('Y-m-d');
             $datos= json_decode($json,true);
+            if (is_array($datos) && isset($datos['version_formulario']) && (string)$datos['version_formulario'] === '2') {
+                return $this->guardarEntrevistaNueva($datos);
+            }
             $id_estudiante=$datos["id_estudiante"];
             
 
@@ -493,8 +496,267 @@ class datos extends ConexionCrud{
         }
     }
 
+    private function guardarEntrevistaNueva($datos){
+        $_respuestas = new respuestas;
+        $idnum = isset($datos['idnum']) ? (string)$datos['idnum'] : '';
+        $token = isset($datos['token']) ? $datos['token'] : '';
 
+        if (!ctype_digit($idnum) || !is_string($token) || $token === '' || strlen($token) > 256) {
+            return $_respuestas->error_401('No autorizado, token invalido');
+        }
 
+        $consentimiento = isset($datos['consentimiento_datos']) ? $datos['consentimiento_datos'] : null;
+        if ($consentimiento !== 1 && $consentimiento !== '1' && $consentimiento !== true) {
+            return $_respuestas->error_400('Debes autorizar el tratamiento de datos.');
+        }
+
+        $respuestas = $this->validarEntrevistaNueva($datos);
+        if (isset($respuestas['error'])) {
+            return $_respuestas->error_400($respuestas['error']);
+        }
+
+        global $mbd;
+        $mbd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        try {
+            $mbd->beginTransaction();
+
+            $consulta = $mbd->prepare(
+                "SELECT tab1.id_estudiante, tab1.entrevista
+                FROM on_interesados tab1
+                INNER JOIN on_interesados_token tab2
+                    ON tab1.id_estudiante = tab2.id_estudiante
+                    AND tab2.on_interesados_token = :token
+                INNER JOIN on_interesados_datos tab9
+                    ON tab1.id_estudiante = tab9.id_estudiante
+                WHERE tab1.id_estudiante = :idnum
+                LIMIT 1
+                FOR UPDATE"
+            );
+            $consulta->execute(array(':token' => $token, ':idnum' => $idnum));
+            $aspirante = $consulta->fetch(PDO::FETCH_ASSOC);
+
+            if (!$aspirante) {
+                $mbd->rollBack();
+                return $_respuestas->error_401('No autorizado, token invalido');
+            }
+
+            $idEstudiante = (int)$aspirante['id_estudiante'];
+            $pendiente = $aspirante['entrevista'] === 1 || $aspirante['entrevista'] === '1';
+
+            if (!$pendiente) {
+                $mbd->rollBack();
+                return array(
+                    'status' => 'ok',
+                    'resultado' => 'ya_completada',
+                    'id_estudiante' => $idEstudiante
+                );
+            }
+
+            $existe = $mbd->prepare(
+                "SELECT id_entrevista
+                FROM on_entrevista
+                WHERE id_estudiante = :id_estudiante AND version_formulario = 2
+                LIMIT 1"
+            );
+            $existe->execute(array(':id_estudiante' => $idEstudiante));
+
+            if (!$existe->fetch(PDO::FETCH_ASSOC)) {
+                $columnas = array(
+                    'id_estudiante', 'fecha_entrevista', 'version_formulario',
+                    'consentimiento_datos', 'consentimiento_fecha'
+                );
+                $marcas = array(':id_estudiante', ':fecha_entrevista', '2', '1', ':consentimiento_fecha');
+                $valores = array(
+                    ':id_estudiante' => $idEstudiante,
+                    ':fecha_entrevista' => date('Y-m-d'),
+                    ':consentimiento_fecha' => date('Y-m-d H:i:s')
+                );
+
+                foreach ($respuestas as $columna => $valor) {
+                    $columnas[] = $columna;
+                    $marcas[] = ':' . $columna;
+                    $valores[':' . $columna] = $valor;
+                }
+
+                $insertar = $mbd->prepare(
+                    "INSERT INTO on_entrevista (" . implode(', ', $columnas) . ")
+                    VALUES (" . implode(', ', $marcas) . ")"
+                );
+                foreach ($valores as $marca => $valor) {
+                    if ($valor === null) {
+                        $insertar->bindValue($marca, null, PDO::PARAM_NULL);
+                    } else {
+                        $insertar->bindValue($marca, $valor);
+                    }
+                }
+                $insertar->execute();
+                if ($insertar->rowCount() < 1) {
+                    $mbd->rollBack();
+                    return $_respuestas->error_500('No se pudo guardar la entrevista.');
+                }
+            }
+
+            $actualizar = $mbd->prepare(
+                "UPDATE on_interesados
+                SET entrevista = 0
+                WHERE id_estudiante = :id_estudiante AND entrevista = 1"
+            );
+            $actualizar->execute(array(':id_estudiante' => $idEstudiante));
+            if ($actualizar->rowCount() !== 1) {
+                $mbd->rollBack();
+                return $_respuestas->error_500('No se pudo guardar la entrevista.');
+            }
+
+            $seguimiento = $mbd->prepare(
+                "INSERT INTO on_seguimiento (
+                    id_usuario, id_estudiante, motivo_seguimiento, mensaje_seguimiento,
+                    fecha_seguimiento, hora_seguimiento, asesor
+                ) VALUES (1, :id_estudiante, 'seguimiento', 'Entrevista', :fecha, :hora, '1')"
+            );
+            $seguimiento->execute(array(
+                ':id_estudiante' => $idEstudiante,
+                ':fecha' => date('Y-m-d'),
+                ':hora' => date('H:i:s')
+            ));
+            if ($seguimiento->rowCount() < 1) {
+                $mbd->rollBack();
+                return $_respuestas->error_500('No se pudo guardar la entrevista.');
+            }
+
+            $mbd->commit();
+            return array(
+                'status' => 'ok',
+                'resultado' => 'guardada',
+                'id_estudiante' => $idEstudiante
+            );
+        } catch (Exception $e) {
+            if ($mbd->inTransaction()) {
+                $mbd->rollBack();
+            }
+            return $_respuestas->error_500('No se pudo guardar la entrevista.');
+        }
+    }
+
+    private function validarEntrevistaNueva($datos){
+        $catalogo = $this->catalogoEntrevistaNueva();
+        $respuestas = array();
+
+        foreach ($catalogo['unicas'] as $campo => $regla) {
+            if (!isset($datos[$campo]) || !is_string($datos[$campo])) {
+                return array('error' => 'Falta una respuesta obligatoria.');
+            }
+            $valor = trim($datos[$campo]);
+            if (!in_array($valor, $regla['opciones'], true) || mb_strlen($valor, 'UTF-8') > $regla['max']) {
+                return array('error' => 'Hay una opción que no está permitida.');
+            }
+            $respuestas[$campo] = $valor;
+        }
+
+        foreach ($catalogo['multiples'] as $campo => $regla) {
+            if (!isset($datos[$campo]) || !is_array($datos[$campo])) {
+                return array('error' => 'Falta una respuesta obligatoria.');
+            }
+            $seleccion = array();
+            foreach ($datos[$campo] as $opcion) {
+                if (!is_string($opcion)) {
+                    return array('error' => 'Hay una opción que no está permitida.');
+                }
+                $opcion = trim($opcion);
+                if (!in_array($opcion, $regla['opciones'], true) || in_array($opcion, $seleccion, true)) {
+                    return array('error' => 'Hay una opción que no está permitida.');
+                }
+                $seleccion[] = $opcion;
+            }
+            $cantidad = count($seleccion);
+            if ($cantidad < 1 || $cantidad > $regla['max']) {
+                return array('error' => 'La cantidad de opciones seleccionadas no es válida.');
+            }
+            $json = json_encode($seleccion, JSON_UNESCAPED_UNICODE);
+            if ($json === false || strlen($json) > 60000) {
+                return array('error' => 'No se pudieron guardar las opciones seleccionadas.');
+            }
+            $respuestas[$campo] = $json;
+        }
+
+        if (!isset($datos['inspirador_nombre']) || !is_string($datos['inspirador_nombre'])) {
+            return array('error' => 'Completa el nombre de tu Inspirador.');
+        }
+        $nombre = trim($datos['inspirador_nombre']);
+        if ($nombre === '' || mb_strlen($nombre, 'UTF-8') > 150) {
+            return array('error' => 'Completa el nombre de tu Inspirador.');
+        }
+        $respuestas['inspirador_nombre'] = $nombre;
+
+        if (!isset($datos['inspirador_celular']) || !is_string($datos['inspirador_celular'])) {
+            return array('error' => 'Escribe un celular de 10 dígitos.');
+        }
+        $celular = preg_replace('/\s+/', '', $datos['inspirador_celular']);
+        if (!preg_match('/^\d{10}$/', $celular)) {
+            return array('error' => 'Escribe un celular de 10 dígitos.');
+        }
+        $respuestas['inspirador_celular'] = $celular;
+
+        $correo = isset($datos['inspirador_correo']) ? $datos['inspirador_correo'] : '';
+        if (!is_string($correo)) {
+            return array('error' => 'Escribe un correo válido o déjalo vacío.');
+        }
+        $correo = trim($correo);
+        if ($correo !== '' && (!filter_var($correo, FILTER_VALIDATE_EMAIL) || mb_strlen($correo, 'UTF-8') > 150)) {
+            return array('error' => 'Escribe un correo válido o déjalo vacío.');
+        }
+        $respuestas['inspirador_correo'] = $correo === '' ? null : $correo;
+
+        if (!isset($datos['municipio_actual']) || !is_string($datos['municipio_actual'])) {
+            return array('error' => 'Escribe tu municipio.');
+        }
+        $municipio = trim($datos['municipio_actual']);
+        if ($municipio === '' || mb_strlen($municipio, 'UTF-8') > 120) {
+            return array('error' => 'Escribe tu municipio.');
+        }
+        $respuestas['municipio_actual'] = $municipio;
+
+        $mensaje = isset($datos['mensaje_final']) ? $datos['mensaje_final'] : '';
+        if (!is_string($mensaje) || mb_strlen($mensaje, 'UTF-8') > 4000) {
+            return array('error' => 'El mensaje final supera la longitud permitida.');
+        }
+        $mensaje = trim($mensaje);
+        $respuestas['mensaje_final'] = $mensaje === '' ? null : $mensaje;
+
+        return $respuestas;
+    }
+
+    private function catalogoEntrevistaNueva(){
+        return array(
+            'unicas' => array(
+                'seguridad_carrera_elegida' => array('max' => 120, 'opciones' => array('Muy seguro(a).', 'Seguro(a).', 'Tengo algunas dudas.', 'Aún no estoy completamente convencido(a).')),
+                'conocimiento_profesion' => array('max' => 40, 'opciones' => array('Mucho.', 'Bastante.', 'Poco.', 'Muy poco.')),
+                'claridad_proyecto_vida' => array('max' => 80, 'opciones' => array('Muy claro.', 'Bastante claro.', 'Tengo algunas ideas.', 'Aún no lo tengo definido.')),
+                'apoyo_personas' => array('max' => 120, 'opciones' => array('Sí, completamente.', 'En gran parte.', 'Solo algunas personas.', 'Siento que estoy afrontando este proceso solo(a).')),
+                'inspirador_relacion' => array('max' => 80, 'opciones' => array('Madre', 'Padre', 'Pareja', 'Hijo(a)', 'Hermano(a)', 'Otro familiar', 'Amigo(a)', 'Compañero(a) de trabajo', 'Jefe', 'Otra persona')),
+                'inspirador_comunicaciones' => array('max' => 10, 'opciones' => array('Sí.', 'No.')),
+                'situacion_acompanamiento' => array('max' => 120, 'opciones' => array('No.', 'Sí, me gustaría recibir orientación.', 'Sí, actualmente recibo atención médica o psicológica.')),
+                'contacto_equipo' => array('max' => 40, 'opciones' => array('Sí.', 'Tal vez.', 'Por ahora no.')),
+                'forma_pedir_ayuda' => array('max' => 120, 'opciones' => array('Busco ayuda rápidamente.', 'Primero intento resolverla y luego pido ayuda.', 'Solo busco ayuda cuando ya no encuentro otra solución.', 'Prefiero resolverla por mi cuenta.')),
+                'situacion_actual' => array('max' => 120, 'opciones' => array('Solo estudio.', 'Estudio y trabajo medio tiempo.', 'Estudio y trabajo tiempo completo.', 'Tengo un emprendimiento.', 'Trabajo y además tengo un emprendimiento.')),
+                'financiacion_estudios' => array('max' => 80, 'opciones' => array('Recursos propios.', 'Apoyo de mi familia.', 'Crédito educativo.', 'Beca o subsidio.', 'Varias opciones.', 'Otro.')),
+                'ingreso_hogar' => array('max' => 80, 'opciones' => array('Menos de $1.000.000', 'Entre $1.000.001 y $2.000.000', 'Entre $2.000.001 y $3.000.000', 'Entre $3.000.001 y $5.000.000', 'Entre $5.000.001 y $8.000.000', 'Más de $8.000.000', 'No lo conozco.', 'Prefiero no responder.')),
+                'dependientes_economicos' => array('max' => 40, 'opciones' => array('No.', 'Sí, una.', 'Sí, dos.', 'Sí, tres o más.')),
+                'mayor_reto' => array('max' => 80, 'opciones' => array('La situación económica.', 'El trabajo.', 'La organización del tiempo.', 'Las responsabilidades familiares.', 'La salud.', 'Adaptarme a la vida institucional.', 'Mantener la motivación.', 'Otro.')),
+                'recurso_computador' => array('max' => 80, 'opciones' => array('Propio.', 'Compartido.', 'Solo celular o tableta.', 'No cuento con computador.')),
+                'recurso_internet' => array('max' => 80, 'opciones' => array('Estable.', 'Algunas veces presenta dificultades.', 'No tengo acceso.')),
+                'estrato_socioeconomico' => array('max' => 1, 'opciones' => array('1', '2', '3', '4', '5', '6')),
+                'con_quien_vive' => array('max' => 80, 'opciones' => array('Con mis padres.', 'Solo con mi madre.', 'Solo con mi padre.', 'Con mi pareja.', 'Con mis hijos.', 'Con otros familiares.', 'Con amigos.', 'Vivo solo(a).', 'Otro.'))
+            ),
+            'multiples' => array(
+                'motivacion_programa' => array('max' => 9, 'opciones' => array('Cumplir un sueño personal.', 'Crecer profesionalmente.', 'Conseguir mejores oportunidades laborales.', 'Mejorar mis ingresos.', 'Crear mi empresa o fortalecer un emprendimiento.', 'Continuar mi proyecto de vida.', 'Fue una recomendación de otra persona.', 'Aún estoy descubriendo cuál es el camino que quiero seguir.', 'Otro.')),
+                'influencia_ciaf' => array('max' => 10, 'opciones' => array('El programa académico.', 'La calidad de la institución.', 'Los horarios.', 'La ubicación.', 'Las opciones de financiación.', 'La recomendación de familiares o amigos.', 'El costo.', 'Posicionamiento en la región.', 'Formación por ciclos.', 'Otro.')),
+                'acompanamiento_academico' => array('max' => 11, 'opciones' => array('Matemáticas.', 'Inglés.', 'Lectura y comprensión de textos.', 'Escritura y redacción.', 'Herramientas digitales.', 'Métodos de estudio.', 'Organización del tiempo.', 'Hablar en público.', 'Habilidades blandas.', 'Ninguna por el momento.', 'Otras.')),
+                'fortalezas_principales' => array('max' => 3, 'opciones' => array('Liderazgo.', 'Trabajo en equipo.', 'Comunicación.', 'Creatividad.', 'Organización.', 'Pensamiento lógico.', 'Tecnología.', 'Emprendimiento.', 'Disciplina.', 'Adaptabilidad.', 'Otra.')),
+                'temas_acompanamiento' => array('max' => 12, 'opciones' => array('Bienestar emocional.', 'Empleabilidad.', 'Emprendimiento.', 'Liderazgo.', 'Educación financiera.', 'Deportes.', 'Cultura.', 'Idiomas.', 'Investigación.', 'Innovación.', 'Voluntariado.', 'Otro.'))
+            )
+        );
+    }
 
 }
 
